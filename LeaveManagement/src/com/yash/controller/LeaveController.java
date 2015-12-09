@@ -7,19 +7,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,11 +27,10 @@ import com.yash.model.LeaveTypes;
 @Controller
 public class LeaveController {
 
-	@Autowired
-	@Qualifier(value = "validator")
-	private Validator validator;
-
 	private RestTemplate restTemplate;
+	
+	/*@Autowired
+    private LeaveRequestValidator leaveRequestValidator;*/
 
 	@RequestMapping(value = "/show")
 	public ModelAndView showPage(HttpSession session) {
@@ -51,14 +46,15 @@ public class LeaveController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/save")
-	public String saveMethod(
-			@Valid @ModelAttribute("leaveRequest") LeaveRequest leaveRequest,
-			ModelMap map, BindingResult result) {
-		validator.validate(leaveRequest, result);
-		if (result.hasErrors()) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveMethod(@ModelAttribute("leaveRequest") LeaveRequest leaveRequest,
+			ModelMap map) {
+		
+		/*leaveRequestValidator.validate(leaveRequest, result);*/
+		
+		/*if (result.hasErrors()) {
 			return "LeaveForm";
-		}
+		}*/
 		restTemplate = new RestTemplate();
 		String url = "http://localhost:8080/LeaveManagement/rest/post";
 		LeaveRequest leave = restTemplate.postForObject(url, leaveRequest,
@@ -137,7 +133,6 @@ public class LeaveController {
 
 	@InitBinder
 	public void bindingOperation(WebDataBinder binder) {
-		binder.setValidator(validator);
 		DateFormat df = new SimpleDateFormat(dateFormat);
 		df.setLenient(true);
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(df, true));

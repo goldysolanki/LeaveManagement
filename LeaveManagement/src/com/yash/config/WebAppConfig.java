@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +18,12 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -97,40 +100,47 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 		return transactionManager;
 	}
 
-	@Override
-	public Validator getValidator() {
-		return localValidatorFactoryBean();
-	}
-
-	@Bean(name="validator")
-	public LocalValidatorFactoryBean localValidatorFactoryBean() {
-		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-		bean.setValidationMessageSource(messageSource());
-		return bean;
-	}
+	/*
+	 * @Override public Validator getValidator() { return
+	 * localValidatorFactoryBean(); }
+	 * 
+	 * @Bean(name="validator") public LocalValidatorFactoryBean
+	 * localValidatorFactoryBean() { LocalValidatorFactoryBean bean = new
+	 * LocalValidatorFactoryBean();
+	 * bean.setValidationMessageSource(messageSource()); return bean; }
+	 */
 
 	@Bean
-	public UrlBasedViewResolver setupViewResolver() {
-		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+	public ViewResolver setupViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/pages/");
 		resolver.setSuffix(".jsp");
 		resolver.setViewClass(JstlView.class);
 		return resolver;
 	}
-
-	@Bean
-	public ResourceBundleMessageSource messageSource() {
-		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-		source.setBasename(env.getRequiredProperty("message.source.basename"));
-		source.setUseCodeAsDefaultMessage(true);
-		return source;
+	/*
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
-
+*/
+	  @Bean
+	    public ResourceBundleMessageSource messageSource() {
+	        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+	        source.setBasename("messages");
+	        source.setUseCodeAsDefaultMessage(true);
+	        return source;
+	    }
+	
+	
+/*
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations(
 				"/resources/");
 	}
+	*/
+	
 	/*
 	 * @Override public void addResourceHandlers(ResourceHandlerRegistry
 	 * registry) { registry.addResourceHandler("/*.jsp").addResourceLocations(

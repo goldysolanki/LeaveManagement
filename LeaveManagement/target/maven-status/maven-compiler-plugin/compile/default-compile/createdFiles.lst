@@ -12,4 +12,3 @@ com\yash\model\Employee.class
 com\yash\service\LeaveRequestService.class
 com\yash\config\Initializer.class
 com\yash\model\LeaveTypes.class
-com\yash\validator\CustomValidator.class

@@ -9,11 +9,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<style type="text/css">
+<!-- <style type="text/css">
 .error {
 	color: red;
 }
-</style>
+</style> -->
 </head>
 <body>
 	<p align="right">
@@ -23,7 +23,7 @@
 		Welcome ${emp.firstName}
 		<h3>Apply for Leave</h3>
 		<form:form action="save" method="post" modelAttribute="leaveRequest">
-			<table width="400" cellpadding="5" cellspacing="3" border="3">
+			<table width="400" cellpadding="5" cellspacing="3" border="0">
 				<tr>
 					<th>Employee ID</th>
 					<td><form:input path="employee.id" value="${emp.id}"
@@ -37,22 +37,22 @@
 				<tr>
 					<th>From Date</th>
 					<td><form:input path="fromDate" /></td>
-					<td><form:errors path="fromDate" cssClass="error" /></td>
+					<%-- <td><form:errors path="fromDate" cssClass="error" /></td> --%>
 				</tr>
 				<tr>
 					<th>To Date</th>
 					<td><form:input path="toDate" /></td>
-					<td><form:errors path="toDate" cssClass="error" /></td>
+					<%-- <td><form:errors path="toDate" cssClass="error" /></td> --%>
 				</tr>
 				<tr>
 					<th>Days</th>
 					<td><form:input path="days" /></td>
-					<td><form:errors path="days" cssClass="error" /></td>
+					<%-- <td><form:errors path="days" cssClass="error" /></td> --%>
 				</tr>
 				<tr>
 					<th>Reason</th>
 					<td><form:textarea path="reason" /></td>
-					<td><form:errors path="reason" cssClass="error" /></td>
+					<%-- <td><form:errors path="reason" cssClass="error" /></td> --%>
 				</tr>
 				<tr>
 					<th>Leave Type</th>
@@ -61,7 +61,7 @@
 							<form:options items="${leaveTypes}" itemLabel="typeId"
 								itemValue="typeValue" />
 						</form:select></td>
-					<td><form:errors path="leaveTypes" cssClass="error" /></td>
+					<%-- <td><form:errors path="leaveTypes" cssClass="error" /></td> --%>
 				</tr>
 				<tr>
 					<th></th>

@@ -27,25 +27,26 @@ public class LeaveRequest {
 	private Date todayDate;
 
 	@Column(name = "from_date")
-	@NotNull
-	@Future
+	//@NotEmpty
+	/*@Future*/
 	private Date fromDate;
 
 	@Column(name = "to_date")
-	@NotNull
-	@Future
+//	@NotEmpty
+	/*@Future*/
 	private Date toDate;
 
-	@NotNull
+//	@NotEmpty
 	private Integer days;
 
-	@NotEmpty
+	/*@NotNull
+	@NotEmpty*/
 	private String reason;
 
 	private String message;
 
 	@Column(name = "leave_type")
-	@NotNull
+	/*@NotEmpty*/
 	private String leaveTypes;
 
 	@Column(name = "leave_status", nullable = false)
