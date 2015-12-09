@@ -68,26 +68,24 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		session.getTransaction().commit();
 		session.close();
 	}
-
-
+	
+	@Override
 	public void saveUser(Employee emp) {
-		sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		Query q = session.createSQLQuery(
-				"select id,pswrd from employee where id=? ;").addEntity(
-				Employee.class);
+		SQLQuery q = session
+				.createSQLQuery("select id,pswrd from employee where id=? ;");
 		q.setString(0, emp.getUserId());
-		
+		q.addEntity(Employee.class);
 		List<Object[]> list = q.list();
-		for (Employee obj : prepareList(list)) {
-			System.out.println(obj.getEmpName());
-			
-			/*Query query = session.createSQLQuery(
-					"insert into user (user_id,password) values (" + obj[0]
-							+ "," + obj[1] + ")").addEntity(User.class);
-			session.getTransaction().commit();*/
-			tx.commit();
+		for (Object[] obj : list) {
+			System.out.println(obj[0] + " " + obj[1]);
+			session.beginTransaction();
+			SQLQuery query = session
+					.createSQLQuery("insert into user (user_id,password) values ("
+							+ obj[0] + "," + obj[1] + ")");
+			query.addEntity(User.class);
+			query.executeUpdate();
+			session.getTransaction().commit();
 			session.close();
 		}
 
@@ -101,23 +99,17 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 		session.getTransaction().commit();
 		session.close();
 	}
-	
-	
-	private List<Employee> prepareList(List list){
+
+	private List<Employee> prepareList(List list) {
 		List<Employee> employees = new ArrayList<Employee>();
 		Iterator iterator = list.iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Employee employee = new Employee();
-			employee = (Employee)iterator.next();
+			employee = (Employee) iterator.next();
 			employees.add(employee);
 		}
-		
+
 		return employees;
 	}
-	public static void main(String[] args) {
-		
-		Employee employee = new Employee();
-		employee.setUserId("vivek123");
-		new EmployeeRepositoryImpl().saveUser(employee);
-	}
+
 }

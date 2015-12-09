@@ -30,8 +30,7 @@
 					<th>Operation</th>
 				</tr>
 				<c:forEach items="${empsList}" var="e">
-					<s:url value="edit" var="eu">
-						<s:param name="empId" value="${e.empId}"></s:param>
+					<s:url value="edit/${e.empId}" var="eu">
 					</s:url>
 					<s:url value="delete" var="ed">
 						<s:param name="empId" value="${e.empId}"></s:param>

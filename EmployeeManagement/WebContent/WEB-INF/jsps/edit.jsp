@@ -15,7 +15,7 @@
 <body>
 	<center>
 		<h3>Edit Employee Details</h3>
-		<form:form action="update" method="post" modelAttribute="employee">
+		<form:form action="http://localhost:8080/EmployeeManagement/update" method="post" modelAttribute="employee">
 			<table width="500" cellpadding="3" cellspacing="3" border="0">
 				<tr>
 					<th>Employee ID</th>

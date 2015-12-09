@@ -34,7 +34,6 @@ public class LoginController {
 			HttpSession session, Model model,
 			@RequestParam("userId") String userId,
 			@RequestParam("password") String password) {
-		String type = null;
 		Session s = sessionFactory.openSession();
 		Query q = s
 				.createQuery("select userId,password,type from User where userId=? and password=?");

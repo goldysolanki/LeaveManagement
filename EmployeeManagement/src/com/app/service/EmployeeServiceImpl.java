@@ -34,10 +34,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		add.setCity(empDTO.getAddress().getCity());
 		emp.setAddress(add);
 		empDao.save(emp);
+		empDao.saveUser(emp);
 	}
 
 	@Override
 	public void modify(EmployeeDTO empDTO) {
+		System.out.println("hiiiiiiiiiiiiiiiiiiii");
 		Employee emp = new Employee();
 		Address add = new Address();
 		emp.setEmpId(empDTO.getEmpId());

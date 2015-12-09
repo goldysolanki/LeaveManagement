@@ -18,5 +18,5 @@ public interface EmployeeRepository {
 
 	public Employee findByUserId(String userId);
 
-	/*public void saveUser(Employee emp);*/
+	public void saveUser(Employee emp);
 }
